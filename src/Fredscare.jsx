@@ -4,12 +4,13 @@ export default function jumpScare() {
 
  const [amount, setAmount] = useState(0);
  function addKill(){
-    setAmount(amount + 1);
+    const newAmount = amount + 1
+    setAmount(newAmount);
 
-    if (amount !== 1) {
-        alert('Freddy has killed you ' + amount + ' times.' );
+    if (newAmount !== 1) {
+        alert('Freddy has killed you ' + newAmount + ' times.' );
     } else {
-        alert('Freddy has killed you ' + amount + ' time.' );
+        alert('Freddy has killed you ' + newAmount + ' time.' );
     }
     
     };
