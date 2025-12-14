@@ -1,4 +1,5 @@
 import {useState} from "react";
+import './Securityroom.css'
 
 export default function doorCheck(){
     const [doorStatus1, setdoorStatus1] = useState("Closed");
@@ -21,8 +22,13 @@ export default function doorCheck(){
 
     return (
         <>
-            <button onClick={changeDoor1}>Door 1 {doorStatus1}</button>
-            <button onClick={changeDoor2}>Door 2 {doorStatus2}</button>
+            <div className="security-room-container">
+                <button onClick={changeDoor1} className="button">Door 1 {doorStatus1}</button>
+                <div className="security-room">
+
+                </div>
+                <button onClick={changeDoor2} className="button">Door 2 {doorStatus2}</button>
+            </div>
         </>
 
     );

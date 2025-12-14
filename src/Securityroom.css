@@ -1,0 +1,21 @@
+.security-room-container {
+    width: 100vw;
+    height: 100vh;
+
+    /* border: 2px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.security-room {
+    border: 2px solid black;
+    padding: 100px;
+    width: 190px;
+}
+
+.button {
+    width: 105px;
+    height: 204px;
+}
