@@ -1,3 +1,8 @@
+.page-container {
+    margin-top: 150px;
+    min-height: 1000px;
+}
+
 .security-room-container {
     width: 1900px;
     height: 205px;
@@ -22,11 +27,22 @@
 }
 
 .section2 {
-    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid black; */
     height: 205px;
 }
 
 .party-area {
     width: 900px;
     height: 204px;
+    border: 2px solid black;
+}
+
+.bathroom {
+    width: 100px;
+    height: 204px;
+    border: 2px solid black;
 }

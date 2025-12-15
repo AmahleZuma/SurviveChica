@@ -21,28 +21,35 @@ export default function doorCheck(){
 
 
     return (
-        <>
+        <div className="page-container">
+            <>
 
-            {/* Section 1 - Security room */}
-            <div className="security-room-container">
-                <button onClick={changeDoor1} className="button">Door 1 {doorStatus1}</button>
-                <div className="security-room">
+                {/* Section 1 - Security room */}
+                <div className="security-room-container">
+                    <button onClick={changeDoor1} className="button">Door 1 {doorStatus1}</button>
+                    <div className="security-room">
 
+                    </div>
+                    <button onClick={changeDoor2} className="button">Door 2 {doorStatus2}</button>
                 </div>
-                <button onClick={changeDoor2} className="button">Door 2 {doorStatus2}</button>
-            </div>
 
 
-            {/* Section 2 - Party Area and Bathrooms */}
-            <div className="section2">
-                <div className="party-area">
+                {/* Section 2 - Party Area and Bathrooms */}
+                <div className="section2">
+                    <div className="party-area">
 
+                    </div>
+                    <div className="bathroom">
+
+                    </div>
                 </div>
-            </div>
 
-            {/* Section 3 - Kitchen, Store Area and Office */}
-            {/* <div></div> */}
-        </>
+                {/* Section 3 - Kitchen, Store Area and Office */}
+                <div className="section3">
+                    
+                </div>
+            </>
+        </div>
 
     );
 }
