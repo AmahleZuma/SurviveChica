@@ -46,3 +46,31 @@
     height: 204px;
     border: 2px solid black;
 }
+
+.section3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid black; */
+    height: 205px;
+}
+
+.kitchen {
+    width: 299px;
+    height: 204px;
+    border: 2px solid black;
+}
+
+.store-area {
+    width: 299px;
+    height: 204px;
+    border: 2px solid black;
+}
+
+.office {
+    width: 295px;
+    height: 204px;
+    border: 2px solid black;
+    margin-right: 103px;
+}

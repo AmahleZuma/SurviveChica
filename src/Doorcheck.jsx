@@ -46,7 +46,15 @@ export default function doorCheck(){
 
                 {/* Section 3 - Kitchen, Store Area and Office */}
                 <div className="section3">
-                    
+                    <div className="kitchen">
+
+                    </div>
+                    <div className="store-area">
+
+                    </div>               
+                    <div className="office">
+
+                    </div>    
                 </div>
             </>
         </div>
