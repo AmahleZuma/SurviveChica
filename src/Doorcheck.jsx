@@ -9,9 +9,9 @@ export default function doorCheck(){
     // This is game ambience
     const [playAmbience, {stop}] = useSound(ambience, {loop: true, volume: 0.5});
 
-    const [doorStatus1, setdoorStatus1] = useState("Closed");
+    const [doorStatus1, setdoorStatus1] = useState("OPEN");
     // If you dont make a separate variable, both elements are affected at once
-    const [doorStatus2, setdoorStatus2] = useState("Closed");
+    const [doorStatus2, setdoorStatus2] = useState("OPEN");
 
     // This plays the door sound
     const [playdoorClose] = useSound(doorClose, {volume: 1});
@@ -22,7 +22,7 @@ export default function doorCheck(){
 
     function changeDoor1() {
         setdoorStatus1(prev =>
-            prev === "Closed" ? "Opened" : "Closed"
+            prev === "OPEN" ? "CLOSED" : "OPEN"
         );
 
         // Door close sound effect
@@ -32,7 +32,7 @@ export default function doorCheck(){
 
     function changeDoor2() {
         setdoorStatus2(prev =>
-            prev === "Closed" ? "Opened" : "Closed"
+            prev === "OPEN" ? "CLOSED" : "OPEN"
         );
 
         // Door close sound effect
@@ -62,11 +62,11 @@ export default function doorCheck(){
 
                 {/* Section 1 - Security room */}
                 <div className="security-room-container">
-                    <button onClick={changeDoor1} className="button">Door 1 {doorStatus1}</button>
+                    <button onClick={changeDoor1} className="button">{doorStatus1}</button>
                     <div className="security-room">
                     
                     </div>
-                    <button onClick={changeDoor2} className="button">Door 2 {doorStatus2}</button>
+                    <button onClick={changeDoor2} className="button">{doorStatus2}</button>
                 </div>
 
 
