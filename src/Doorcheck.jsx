@@ -1,15 +1,22 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {useSound} from 'use-sound';
 import './Securityroom.css'
 import doorClose from './sfx/doorOpen.mp3';
+import ambience from './sfx/ambience.mp3';
 
 export default function doorCheck(){
+
+    // This is game ambience
+    const [playAmbience, {stop}] = useSound(ambience, {loop: true, volume: 0.5});
+
     const [doorStatus1, setdoorStatus1] = useState("Closed");
     // If you dont make a separate variable, both elements are affected at once
     const [doorStatus2, setdoorStatus2] = useState("Closed");
 
     // This plays the door sound
-    const [playdoorClose] = useSound(doorClose);
+    const [playdoorClose] = useSound(doorClose, {volume: 1});
+
+    const [ambienceMode, setambienceMode] = useState("OFF")
 
 
 
@@ -21,7 +28,7 @@ export default function doorCheck(){
         // Door close sound effect
         playdoorClose();
             
-    }
+    };
 
     function changeDoor2() {
         setdoorStatus2(prev =>
@@ -30,7 +37,23 @@ export default function doorCheck(){
 
         // Door close sound effect
         playdoorClose();
+    };
+
+    function playBackground() {
+        setambienceMode(prev => {
+            if (prev === "OFF") {
+                playAmbience();
+                return "ON"
+            } else if (prev === "ON"){
+                stop();
+                return "OFF"
+            }
+        });
+
     }
+
+
+
 
 
     return (
@@ -70,6 +93,9 @@ export default function doorCheck(){
                     </div>    
                 </div>
             </>
+            <button className="ambience" onClick={playBackground}>
+                Ambience {ambienceMode}
+            </button>
         </div>
 
     );
