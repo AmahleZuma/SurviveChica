@@ -9,6 +9,10 @@ export default function doorCheck(){
     // This is game ambience
     const [playAmbience, {stop}] = useSound(ambience, {loop: true, volume: 0.5});
 
+    // This is the toggle button for the game ambience
+    const [ambienceMode, setambienceMode] = useState("OFF")
+
+
     const [doorStatus1, setdoorStatus1] = useState("OPEN");
     // If you dont make a separate variable, both elements are affected at once
     const [doorStatus2, setdoorStatus2] = useState("OPEN");
@@ -16,7 +20,8 @@ export default function doorCheck(){
     // This plays the door sound
     const [playdoorClose] = useSound(doorClose, {volume: 1});
 
-    const [ambienceMode, setambienceMode] = useState("OFF")
+    // This sets Freddy's position
+    const [freddypos, setfreddypos] = useState({X: 0, Y: 0});
 
 
 
@@ -59,38 +64,39 @@ export default function doorCheck(){
     return (
         <div className="page-container">
             <>
+                <div className="game-world">
+                    {/* MAP */}
 
-                {/* Section 1 - Security room */}
-                <div className="security-room-container">
-                    <button onClick={changeDoor1} className="button">{doorStatus1}</button>
-                    <div className="security-room">
-                    
+                    {/* Section 1 - Security room */}
+                    <div className="security-room-container">
+                        <button onClick={changeDoor1} className="button">{doorStatus1}</button>
+                        <div className="security-room"></div>
+                        <button onClick={changeDoor2} className="button">{doorStatus2}</button>
                     </div>
-                    <button onClick={changeDoor2} className="button">{doorStatus2}</button>
-                </div>
 
 
-                {/* Section 2 - Party Area and Bathrooms */}
-                <div className="section2">
-                    <div className="party-area">
-
+                    {/* Section 2 - Party Area and Bathrooms */}
+                    <div className="section2">
+                        <div className="party-area"></div>
+                        <div className="bathroom"></div>
                     </div>
-                    <div className="bathroom">
 
+                    {/* Section 3 - Kitchen, Store Area and Office */}
+                    <div className="section3">
+                        <div className="kitchen"></div>
+                        <div className="store-area"></div>               
+                        <div className="office"></div>    
                     </div>
-                </div>
 
-                {/* Section 3 - Kitchen, Store Area and Office */}
-                <div className="section3">
-                    <div className="kitchen">
-
+                    {/* Freddy*/}
+                    <div className="Freddy" 
+                            style={{
+                            left: freddypos.X,
+                            top: freddypos.Y,
+                        }}>
                     </div>
-                    <div className="store-area">
 
-                    </div>               
-                    <div className="office">
 
-                    </div>    
                 </div>
             </>
             <button className="ambience" onClick={playBackground}>

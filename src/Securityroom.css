@@ -3,6 +3,11 @@
     min-height: 1000px;
 }
 
+.game-world {
+    position: relative;
+    background: #1111;
+}
+
 .security-room-container {
     width: 1900px;
     height: 205px;
@@ -73,4 +78,13 @@
     height: 204px;
     border: 2px solid black;
     margin-right: 103px;
+}
+
+.Freddy {
+    position:absolute;
+    width: 35px;
+    height: 35px;
+    background: rgb(168, 99, 9);
+    z-index: 10;
+    pointer-events: none;
 }
