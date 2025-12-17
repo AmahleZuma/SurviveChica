@@ -4,13 +4,16 @@ import './Securityroom.css'
 import doorClose from './sfx/doorOpen.mp3';
 import ambience from './sfx/ambience.mp3';
 
+
+// Room dimensions based on CSS
 const ROOMS = {
   SECURITY: { x: 850, y: 0, width: 200, height: 205 },
   PARTY: { x: 350, y: 205, width: 900, height: 205 },
   BATHROOM: { x: 1250, y: 205, width: 100, height: 205 },
   KITCHEN: { x: 350, y: 410, width: 299, height: 205 },
   STORE: { x: 649, y: 410, width: 299, height: 205 },
-  OFFICE: { x: 948, y: 410, width: 295, height: 205 }
+  OFFICE: { x: 948, y: 410, width: 295, height: 205 },
+  BEGIN: {x: 0, y: 0, width: 1904, height: 615}, // Turns the game space into a room...for debuggin purposes
 };
 
 export default function doorCheck(){
@@ -30,7 +33,7 @@ export default function doorCheck(){
     const [playdoorClose] = useSound(doorClose, {volume: 1});
 
     // This sets Freddy's position
-    const [freddypos, setfreddypos] = useState({X: 0, Y: 0});
+    const [freddypos, setfreddypos] = useState({x: 0, y: 0});
 
 
 
@@ -67,14 +70,22 @@ export default function doorCheck(){
     }
 
     useEffect(() => {
-        const room = ROOMS.PARTY;
+        const room = ROOMS.BEGIN;
 
         setfreddypos ({
-            x: room.x + room.width/2,
-            y: room.y + room.height/2
+            // This places them in the approximate center, might need to look back on this
+            // x: room.x + room.width/2,
+            // y: room.y + room.height/2
+            x: 100,
+            y: 205
 
         })
     }, [])
+
+    // This will log the position of freddy (top left) according to (x; y) so the room can be measured properly
+    useEffect(() => {
+        console.log(freddypos);
+    }, [freddypos]);
 
 
 
