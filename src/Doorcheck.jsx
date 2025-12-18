@@ -6,6 +6,7 @@ import ambience from './sfx/ambience.mp3';
 
 
 // Room dimensions based on Game world position
+// Not pixel perfect, but logical enough that the animatronic movement makes sense
 const ROOMS = {
   SECURITY: { x: 755, y: 0, width: 390, height: 205 },
   PARTY: { x: 450, y: 205, width: 900, height: 205 },
