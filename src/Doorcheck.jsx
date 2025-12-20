@@ -196,3 +196,4 @@ export default function doorCheck(){
 
 // Point in Circle:
 // Given that Freddy is at position (x;y), which room is Freddy in at the moment? 
+// A point is inside a room if point x is between left and right AND point y is between top and bottom
