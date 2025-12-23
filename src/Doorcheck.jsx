@@ -16,6 +16,14 @@ const ROOMS = {
   OFFICE: { x: 1055, y: 410, width: 295, height: 205 }
 };
 
+// This is the space in front of the door, if the animatronic reaches and the door is open...GAME OVER
+const DANGER = {
+    DOOR1: {x:450, y:0, width:300, height:205},
+    DOOR2: {x:1150, y:0, width:300, height:205}
+}
+
+
+
 export default function doorCheck(){
 
     // This is game ambience
@@ -39,10 +47,10 @@ export default function doorCheck(){
     const [foxyPos, setfoxyPos] = useState({x:20, y:0});
 
     // This sets Chica's position
-    const [chicaPos, setchicaPos] = useState({x:25, y:0});
+    const [chicaPos, setchicaPos] = useState({x:250, y:0});
 
     // This sets Bonny's position
-    const [bonnyPos, setbonnyPos] = useState({x:50, y:0});
+    const [bonnyPos, setbonnyPos] = useState({x:1450, y:0});
 
     // Testing if the function works
     const aniPos = {x:500, y: 300}
@@ -93,7 +101,18 @@ export default function doorCheck(){
         );
     }
 
-    // Should insert AI here
+    function isAnimatronicinDangerZone(animatronicPos, space, door){
+        // Return true if so
+        return(
+            animatronicPos.x >= space.x &&
+            animatronicPos.x <= space.x + space.width &&
+            animatronicPos.y >= space.y &&
+            animatronicPos.y <= space.y + space.height
+        );
+
+    }
+
+    //Should insert animatronic AI logic here(how they'll move on their own)
 
     useEffect(() => {
         const room = ROOMS.BEGIN;
@@ -171,7 +190,7 @@ export default function doorCheck(){
                     </div>
 
                     {/* Bonny*/}
-                    <div className="Bonnie"   style={{
+                    <div className="Bonny"   style={{
                             left: bonnyPos.x,
                             top: bonnyPos.y
                         }}>
