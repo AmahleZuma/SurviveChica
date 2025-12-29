@@ -140,7 +140,8 @@ export default function doorCheck(){
                 x: prev.x + 10 ,
                 y: prev.y - 10  
             }))
-
+            
+            // Telling him where to go
             setfreddypos(
                 {
                     x: ROOMS.TARGET.x,
