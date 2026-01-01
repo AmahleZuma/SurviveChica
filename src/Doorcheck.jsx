@@ -143,10 +143,10 @@ export default function doorCheck(){
             fxNew = fx/fmag
             fyNew = fy/fmag
 
-            setfreddypos({
-                x: fxNew + 10,
-                y: fyNew - 10
-            })
+            setfreddypos(prev => ({
+                x: prev.x + fxNew * 10,
+                y: prev.y + fyNew * 10
+            }))
 
             // Telling freddy to move
             // setfreddypos( prev => ({
