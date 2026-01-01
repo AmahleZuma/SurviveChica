@@ -135,19 +135,32 @@ export default function doorCheck(){
     useEffect(() => {
         const interval = setInterval(() => {
 
+            fx= securityPos.x - freddypos.x;
+            fy= securityPos.y - freddypos.y
+
+            fmag= Math.sqrt(fx**2 + fy**2);
+
+            fxNew = fx/fmag
+            fyNew = fy/fmag
+
+            setfreddypos({
+                x: fxNew + 10,
+                y: fyNew - 10
+            })
+
             // Telling freddy to move
-            setfreddypos( prev => ({
-                x: prev.x + 10 ,
-                y: prev.y - 10  
-            }))
+            // setfreddypos( prev => ({
+            //     x: prev.x + 10 ,
+            //     y: prev.y - 10  
+            // }))
             
             // Telling him where to go
-            setfreddypos(
-                {
-                    x: ROOMS.TARGET.x,
-                    y: ROOMS.TARGET.y
-                }
-            )
+            // setfreddypos(
+            //     {
+            //         x: ROOMS.TARGET.x,
+            //         y: ROOMS.TARGET.y
+            //     }
+            // )
 
 
 
