@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {useSound} from 'use-sound';
 import './Securityroom.css'
 import doorClose from './sfx/doorOpen.mp3';
@@ -46,10 +46,16 @@ export default function doorCheck(){
     const [playdoorClose] = useSound(doorClose, {volume: 1});
 
     // Security Guard position
-    const [securityPos, setsecurityPos] = useState({x:0, y:0});
+    const [securityPos, setsecurityPos] = useState({x:925, y:95});
+
+    // If THIS does not work I'm jumping in a vat of acid
+    const securityRef = useRef({x:925, y:95})
 
     // This sets Freddy's position
     const [freddypos, setfreddypos] = useState({x: 1300, y: 550});
+
+    // If this does not work I'll drink bleach
+    const freddyRef = useRef({x: 1300, y: 550})
 
     // This sets Foxy's position
     const [foxyPos, setfoxyPos] = useState({x:1400, y:350});
@@ -135,18 +141,29 @@ export default function doorCheck(){
     useEffect(() => {
         const interval = setInterval(() => {
 
-            fx= securityPos.x - freddypos.x;
-            fy= securityPos.y - freddypos.y
+            fx= securityRef.current.x - freddyRef.current.x;
+            fy= securityRef.current.y - freddyRef.current.y
 
             fmag= Math.sqrt(fx**2 + fy**2);
 
             fxNew = fx/fmag
             fyNew = fy/fmag
 
-            setfreddypos(prev => ({
-                x: prev.x + fxNew * 10,
-                y: prev.y + fyNew * 10
-            }))
+
+            freddyRef.current.x += fxNew * 10;
+            freddyRef.current.y += fyNew * 10;
+
+                    
+ 
+
+            setfreddypos({ ...freddyRef.current });
+
+        
+
+            // setfreddypos(prev => ({
+            //     x: prev.x + fxNew * 10,
+            //     y: prev.y + fyNew * 10
+            // }))
 
             // Telling freddy to move
             // setfreddypos( prev => ({
@@ -165,30 +182,32 @@ export default function doorCheck(){
 
 
 
-        }, 1000)
+        }, 50)
 
         return () => clearInterval(interval)
     }, [])
 
 
-    useEffect(() => {
-        // Hard coding security guards position for reference purposes
-        setsecurityPos ({
-            x: 925,
-            y: 95
-        })
-    }, [])
+    // useEffect(() => {
+    //     // Hard coding security guards position for reference purposes
+    //     setsecurityPos ({
+    //         x: 925,
+    //         y: 95
+    //     })
+    // }, [])
 
 
     // Looping through the animatronics to see which one is in the danger zone
-    animatronics.forEach(a => {
-        if (isAnimatronicinDangerZone(a.pos, DANGER.DOOR1) && doorStatus1==="OPEN") {
-            console.log(`GAME OVER - ${a.name} killed you`)
-        }
-        if (isAnimatronicinDangerZone(a.pos, DANGER.DOOR2) && doorStatus1==="OPEN") {
-            console.log(`GAME OVER - ${a.name} killed you`)
-        }
-    })
+    // animatronics.forEach(a => {
+    //     if (isAnimatronicinDangerZone(a.pos, DANGER.DOOR1) && doorStatus1==="OPEN") {
+    //         console.log(`GAME OVER - ${a.name} killed you`)
+    //     }
+    //     if (isAnimatronicinDangerZone(a.pos, DANGER.DOOR2) && doorStatus1==="OPEN") {
+    //         console.log(`GAME OVER - ${a.name} killed you`)
+    //     }
+    // })
+
+
 
 
 
@@ -223,8 +242,8 @@ export default function doorCheck(){
 
                     {/* Freddy*/}
                     <div className="Freddy"   style={{
-                            left: freddypos.x,
-                            top: freddypos.y
+                            left: freddyRef.current.x,
+                            top: freddyRef.current.y
                         }}>
                             Freddy
                     </div>
