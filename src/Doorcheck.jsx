@@ -1,5 +1,5 @@
-import {useState, useEffect, useRef} from "react";
-import {useSound} from 'use-sound';
+import { useState, useEffect, useRef } from "react";
+import { useSound } from 'use-sound';
 import './Securityroom.css'
 import doorClose from './sfx/doorOpen.mp3';
 import ambience from './sfx/ambience.mp3';
@@ -9,28 +9,28 @@ import ambience from './sfx/ambience.mp3';
 // Room dimensions based on Game world position
 // Not pixel perfect, but logical enough that the animatronic movement makes sense
 const ROOMS = {
-  SECURITY: { x: 755, y: 0, width: 390, height: 205 },
-  PARTY: { x: 450, y: 205, width: 900, height: 205 },
-  TOILET: { x: 1350, y: 205, width: 105, height: 205 },
-  KITCHEN: { x: 450, y: 410, width: 300, height: 205 },
-  STORE: { x: 750, y: 410, width: 305, height: 205 },
-  OFFICE: { x: 1055, y: 410, width: 295, height: 205 },
-  TARGET: {x:950, y:102.5}
+    SECURITY: { x: 755, y: 0, width: 390, height: 205 },
+    PARTY: { x: 450, y: 205, width: 900, height: 205 },
+    TOILET: { x: 1350, y: 205, width: 105, height: 205 },
+    KITCHEN: { x: 450, y: 410, width: 300, height: 205 },
+    STORE: { x: 750, y: 410, width: 305, height: 205 },
+    OFFICE: { x: 1055, y: 410, width: 295, height: 205 },
+    TARGET: { x: 950, y: 102.5 }
 };
 
 // This is the space in front of the door, if the animatronic reaches and the door is open...GAME OVER
 const DANGER = {
-    DOOR1: {x:450, y:0, width:300, height:205},
-    DOOR2: {x:1150, y:0, width:300, height:205}
+    DOOR1: { x: 450, y: 0, width: 300, height: 205 },
+    DOOR2: { x: 1150, y: 0, width: 300, height: 205 }
 }
 
 
 
 
-export default function doorCheck(){
+export default function doorCheck() {
 
     // This is game ambience
-    const [playAmbience, {stop}] = useSound(ambience, {loop: true, volume: 0.5});
+    const [playAmbience, { stop }] = useSound(ambience, { loop: true, volume: 0.5 });
 
     // This is the toggle button for the game ambience
     const [ambienceMode, setambienceMode] = useState("OFF")
@@ -43,39 +43,39 @@ export default function doorCheck(){
     const [doorStatus2, setdoorStatus2] = useState("OPEN");
 
     // This plays the door sound
-    const [playdoorClose] = useSound(doorClose, {volume: 1});
+    const [playdoorClose] = useSound(doorClose, { volume: 1 });
 
     // Security Guard position
-    const [securityPos, setsecurityPos] = useState({x:925, y:95});
+    const [securityPos, setsecurityPos] = useState({ x: 925, y: 95 });
 
     // If THIS does not work I'm jumping in a vat of acid
-    const securityRef = useRef({x:925, y:95})
+    const securityRef = useRef({ x: 925, y: 95 })
 
     // This sets Freddy's position
-    const [freddypos, setfreddypos] = useState({x: 1300, y: 550});
+    const [freddypos, setfreddypos] = useState({ x: 1300, y: 550 });
 
     // If this does not work I'll drink bleach
-    const freddyRef = useRef({x: 1300, y: 550})
+    const freddyRef = useRef({ x: 1300, y: 550 })
 
     // This sets Foxy's position
-    const [foxyPos, setfoxyPos] = useState({x:1400, y:350});
+    const [foxyPos, setfoxyPos] = useState({ x: 1400, y: 350 });
 
     // This sets Chica's position
-    const [chicaPos, setchicaPos] = useState({x:500, y:570});
+    const [chicaPos, setchicaPos] = useState({ x: 500, y: 570 });
 
     // This sets Bonny's position
-    const [bonnyPos, setbonnyPos] = useState({x:800, y:470});
+    const [bonnyPos, setbonnyPos] = useState({ x: 800, y: 470 });
 
 
     // Testing if the function works
-    const aniPos = {x:500, y: 300}
+    const aniPos = { x: 500, y: 300 }
 
     // I don't want to duplicate game logic
     const animatronics = [
-        {name: "Freddy", pos: freddypos},
-        {name: "Foxy", pos: foxyPos},
-        {name: "Chica", pos: chicaPos},
-        {name: "Bonny", pos: bonnyPos}
+        { name: "Freddy", pos: freddypos },
+        { name: "Foxy", pos: foxyPos },
+        { name: "Chica", pos: chicaPos },
+        { name: "Bonny", pos: bonnyPos }
     ];
 
 
@@ -87,7 +87,7 @@ export default function doorCheck(){
 
         // Door close sound effect
         playdoorClose();
-            
+
     };
 
     function changeDoor2() {
@@ -105,7 +105,7 @@ export default function doorCheck(){
             if (prev === "OFF") {
                 playAmbience();
                 return "ON"
-            } else if (prev === "ON"){
+            } else if (prev === "ON") {
                 stop();
                 return "OFF"
             }
@@ -117,7 +117,7 @@ export default function doorCheck(){
     function isAnimatronicInRoom(animatronicPos, room) {
 
         // Returns True for if within room, else False
-        return(
+        return (
             animatronicPos.x >= room.x &&                                   // Left
             animatronicPos.x <= room.x + room.width &&                     // Right
             animatronicPos.y >= room.y &&                                 // Top
@@ -125,9 +125,9 @@ export default function doorCheck(){
         );
     }
 
-    function isAnimatronicinDangerZone(animatronicPos, space){
+    function isAnimatronicinDangerZone(animatronicPos, space) {
         // Return true if so
-        return(
+        return (
             animatronicPos.x >= space.x &&
             animatronicPos.x <= space.x + space.width &&
             animatronicPos.y >= space.y &&
@@ -139,62 +139,39 @@ export default function doorCheck(){
     //Should insert animatronic AI logic here(how they'll move on their own)
     // We dont have an engine designated loop function so we make our own using this
     useEffect(() => {
+
+        const speed = 10;
         const interval = setInterval(() => {
 
-            fx= securityRef.current.x - freddyRef.current.x;
-            fy= securityRef.current.y - freddyRef.current.y
-
-            fmag= Math.sqrt(fx**2 + fy**2);
-
-            fxNew = fx/fmag
-            fyNew = fy/fmag
+            // Calculating the difference between the security guard and freddy...the direction
+            const dx = securityRef.current.x - freddyRef.current.x;
+            const dy = securityRef.current.y - freddyRef.current.y;
 
 
-            freddyRef.current.x += fxNew * 10;
-            freddyRef.current.y += fyNew * 10;
+            // Calculating the distance between security guard and freddy
+            const distance = Math.sqrt(dx ** 2 + dy ** 2)
 
-                    
- 
+            // Breaking the difference into small unit steps freddy will take at a time
+            const nx = dx / distance;
+            const ny = dy / distance;
 
-            setfreddypos({ ...freddyRef.current });
+            // Getting freddy to move
+            freddyRef.current.x += nx * speed;
+            freddyRef.current.y += ny * speed;
 
-        
 
-            // setfreddypos(prev => ({
-            //     x: prev.x + fxNew * 10,
-            //     y: prev.y + fyNew * 10
-            // }))
+            setfreddypos({...freddyRef.current})
 
-            // Telling freddy to move
-            // setfreddypos( prev => ({
-            //     x: prev.x + 10 ,
-            //     y: prev.y - 10  
-            // }))
-            
-            // Telling him where to go
-            // setfreddypos(
-            //     {
-            //         x: ROOMS.TARGET.x,
-            //         y: ROOMS.TARGET.y
-            //     }
-            // )
+            console.log(`Freddypos: x-${freddyRef.current.x}; y-${freddyRef.current.y}`)
+
+        }, 50);
 
 
 
-
-        }, 50)
 
         return () => clearInterval(interval)
-    }, [])
+    }, [doorStatus1, doorStatus2])
 
-
-    // useEffect(() => {
-    //     // Hard coding security guards position for reference purposes
-    //     setsecurityPos ({
-    //         x: 925,
-    //         y: 95
-    //     })
-    // }, [])
 
 
     // Looping through the animatronics to see which one is in the danger zone
@@ -236,48 +213,48 @@ export default function doorCheck(){
                     {/* Section 3 - Kitchen, Store Area and Office */}
                     <div className="section3">
                         <div className="kitchen"></div>
-                        <div className="store-area"></div>               
-                        <div className="office"></div>    
+                        <div className="store-area"></div>
+                        <div className="office"></div>
                     </div>
 
                     {/* Freddy*/}
-                    <div className="Freddy"   style={{
-                            left: freddyRef.current.x,
-                            top: freddyRef.current.y
-                        }}>
-                            Freddy
+                    <div className="Freddy" style={{
+                        left: freddyRef.current.x,
+                        top: freddyRef.current.y
+                    }}>
+                        Freddy
                     </div>
 
                     {/* Foxy*/}
-                    <div className="Foxy"   style={{
-                            left: foxyPos.x,
-                            top: foxyPos.y
-                        }}>
-                            Foxy
+                    <div className="Foxy" style={{
+                        left: foxyPos.x,
+                        top: foxyPos.y
+                    }}>
+                        Foxy
                     </div>
 
                     {/* Chica*/}
-                    <div className="Chica"   style={{
-                            left: chicaPos.x,
-                            top: chicaPos.y
-                        }}>
-                            Chica
+                    <div className="Chica" style={{
+                        left: chicaPos.x,
+                        top: chicaPos.y
+                    }}>
+                        Chica
                     </div>
 
                     {/* Bonny*/}
-                    <div className="Bonny"   style={{
-                            left: bonnyPos.x,
-                            top: bonnyPos.y
-                        }}>
-                            Bonny
+                    <div className="Bonny" style={{
+                        left: bonnyPos.x,
+                        top: bonnyPos.y
+                    }}>
+                        Bonny
                     </div>
 
                     {/* Guard */}
-                    <div className="Guard"   style={{
-                            left: securityPos.x,
-                            top: securityPos.y
-                        }}>
-                            Guard
+                    <div className="Guard" style={{
+                        left: securityPos.x,
+                        top: securityPos.y
+                    }}>
+                        Guard
                     </div>
 
 
