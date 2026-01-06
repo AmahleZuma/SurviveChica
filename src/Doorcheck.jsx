@@ -165,6 +165,7 @@ export default function doorCheck() {
 
             setfreddypos({...freddyRef.current})
 
+
             console.log(`Freddypos: x-${freddyRef.current.x}; y-${freddyRef.current.y}`)
 
         }, 50);
@@ -194,7 +195,6 @@ export default function doorCheck() {
             foxyRef.current.y += ny * foxySpeed;
 
             setfoxyPos({...foxyRef.current})
-
 
 
         }, 50);
@@ -298,4 +298,20 @@ export default function doorCheck() {
     );
 }
 
+// Animatronic AI behaviour
 
+/*
+Chica - the cautious one
+
+aggression is at a 5 out of 10
+shes extremely aware of the player
+will wait about 15 seconds before moving so not too impatient
+
+she pauses when there is surveillance
+will wait when the camera opens
+when it closes, changes room
+randomly picks a room
+is shes close to the door though she will sprint 
+but will wait if shes watched while sprinting
+and will wait if the door is closed and possibly move to a room further from the player
+*/
