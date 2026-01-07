@@ -217,7 +217,7 @@ export default function doorCheck() {
     useEffect(() => {
 
         const aggression = 5 // no clue wht to do with this, just putting it here
-        const roamSpeed = 4;
+        const roamSpeed = 2;
         const sprintSpeed = 10;
         let currentState;
 
