@@ -217,49 +217,50 @@ export default function doorCheck() {
     useEffect(() => {
 
         const aggression = 5 // no clue wht to do with this, just putting it here
-        const roamSpeed = 4
-        const sprintSpeed = 10
+        const roamSpeed = 4;
+        const sprintSpeed = 10;
+        let currentState;
 
-        // WAIT
-        const chicaWait = setInterval(() => {
-            // uhm do nothing?
-        }, 13000)
 
-        // ROAM
-        const chicaRoam = setInterval(() => {
-            const dx = rooms.x - chicaRef.current.x;
-            const dy = rooms.y - chicaRef.current.y;
 
-            const distance = Math.sqrt(dx**2 + dy**2);
+        // // ROAM
+        // const chicaRoam = setInterval(() => {
+        //     const dx = rooms.x - chicaRef.current.x;
+        //     const dy = rooms.y - chicaRef.current.y;
 
-            const nx = dx/distance;
-            const ny = dy/distance;
+        //     const distance = Math.sqrt(dx**2 + dy**2);
 
-            chicaRef.current.x += nx * roamSpeed;
-            chicaRef.current.y += ny * roamSpeed;
+        //     const nx = dx/distance;
+        //     const ny = dy/distance;
 
-            setchicaPos({...chicaRef.current})
-        },50)
+        //     chicaRef.current.x += nx * roamSpeed;
+        //     chicaRef.current.y += ny * roamSpeed;
 
-        // Sprint
-        const chicaSprint = setInterval(() => {
-            const dx = door1.current.x - chicaRef.current.x;
-            const dy = door1.current.y - chicaRef.current.y;
+        //     setchicaPos({...chicaRef.current})
+        // },50)
 
-            const distance = Math.sqrt(dx**2 + dy**2);
+        // // Sprint
+        // const chicaSprint = setInterval(() => {
+        //     const dx = door1.current.x - chicaRef.current.x;
+        //     const dy = door1.current.y - chicaRef.current.y;
 
-            const nx = dx/distance;
-            const ny = dy/distance;
+        //     const distance = Math.sqrt(dx**2 + dy**2);
 
-            chicaRef.current.x += nx * sprintSpeed;
-            chicaRef.current.y += ny * sprintSpeed;
+        //     const nx = dx/distance;
+        //     const ny = dy/distance;
 
-            setchicaPos({...chicaRef.current})
-        },50)
+        //     chicaRef.current.x += nx * sprintSpeed;
+        //     chicaRef.current.y += ny * sprintSpeed;
 
-        chicaWait;
-        chicaRoam;
-        chicaSprint;
+        //     setchicaPos({...chicaRef.current})
+        // },50)
+
+        const waitcheck = () => {console.log("Wait is finished")}
+        currentState = setTimeout(waitcheck, 13000);
+        
+        
+
+
         
 
     })
