@@ -260,6 +260,8 @@ export default function doorCheck() {
 
             // ROAM
             const chicaRoam = setInterval(() => {
+                // need to get her to go to a random area in a room not the specific coordinates
+                // range?
                 const dx = ROOMS[rooms].x - chicaRef.current.x;
                 const dy = ROOMS[rooms].y - chicaRef.current.y;
 
