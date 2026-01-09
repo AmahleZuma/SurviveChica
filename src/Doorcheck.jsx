@@ -15,22 +15,12 @@ const ROOMS = {
     KITCHEN: { x: 450, y: 410, width: 300, height: 205 },
     STORE: { x: 750, y: 410, width: 305, height: 205 },
     OFFICE: { x: 1055, y: 410, width: 295, height: 205 },
-    TARGET: { x: 950, y: 102.5 },
 };
 
 const DANGERZONES = {
     DOOR1: { x: 450, y: 0, width: 300, height: 205 },
     DOOR2: { x: 1150, y: 0, width: 300, height: 205 }
 }
-
-// sorts rooms into arrays
-const roomsArray = Object.keys(ROOMS)
-
-// Creates index to pick from
-const roomsIndex = Math.floor(Math.random() * roomsArray.length);
-
-// Random room will be picked
-const rooms = roomsArray[roomsIndex]
 
 
 
@@ -224,23 +214,6 @@ export default function doorCheck() {
         const sprintSpeed = 10;
         let currentState;
 
-        // This will help me get the range so chica wont go to a specific coordinate but more inside the space
-        const maxValX = ROOMS[rooms].x + ROOMS[rooms].width;
-        const minValX = ROOMS[rooms].x
-
-        const maxValY = ROOMS[rooms].y + ROOMS[rooms].height;
-        const minValY = ROOMS[rooms].y
-
-        const rangeX = maxValX - minValX;
-        const rangeY = maxValY - minValY;
-
-        // Creates a random width and height to add to the minimum => 
-        const randWidth = Math.floor(Math.random() * (rangeX + 1));
-        const randHeight = Math.floor(Math.random() * (rangeY + 1));
-
-        // Chica will go to a random location inside a room not a specific coordinate
-        const roomX = randWidth + minValX;
-        const roomY = randHeight + minValY
 
 
 
@@ -248,19 +221,46 @@ export default function doorCheck() {
         const waitcheck = () => {
             console.log("Wait is finished")
 
+            // Turning rooms into keys
+            // sorts rooms into arrays
+            const roomsArray = Object.keys(ROOMS)
+
+            // Creates index to pick from
+            const roomsIndex = Math.floor(Math.random() * roomsArray.length);
+
+            // Random room will be picked
+            const rooms = roomsArray[roomsIndex]
+
+            // This will help me get the range so chica wont go to a specific coordinate but more inside the space
+            const maxValX = ROOMS[rooms].x + ROOMS[rooms].width;
+            const minValX = ROOMS[rooms].x
+
+            const maxValY = ROOMS[rooms].y + ROOMS[rooms].height;
+            const minValY = ROOMS[rooms].y
+
+            const rangeX = maxValX - minValX;
+            const rangeY = maxValY - minValY;
+
+            // Creates a random width and height to add to the minimum => 
+            const randWidth = Math.floor(Math.random() * (rangeX + 1));
+            const randHeight = Math.floor(Math.random() * (rangeY + 1));
+
+            // Chica will go to a random location inside a room not a specific coordinate
+            const roomX = randWidth + minValX;
+            const roomY = randHeight + minValY
+
+
+            let chicaRoam;
+
             // ROAM
-            const chicaRoam = setInterval(() => {
+            chicaRoam = setInterval(() => {
                 
                 const dx = roomX - chicaRef.current.x;
                 const dy = roomY - chicaRef.current.y;
 
                 const distance = Math.sqrt(dx**2 + dy**2);
 
-                const nx = dx/distance;
-                const ny = dy/distance;
 
-                chicaRef.current.x += nx * roamSpeed;
-                chicaRef.current.y += ny * roamSpeed;
 
                 setchicaPos({...chicaRef.current})
 
@@ -269,11 +269,19 @@ export default function doorCheck() {
                     console.log("ARRIVED. Stopping Interval....");
                     clearInterval(chicaRoam);
                     setTimeout(waitcheck, 13000)
+                    return;
                 }
 
-                console.log(`${chicaPos.x} : ${chicaPos.y}`);
+                const nx = dx/distance;
+                const ny = dy/distance;
+
+                chicaRef.current.x += nx * roamSpeed;
+                chicaRef.current.y += ny * roamSpeed;
+
+                console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
                 
             },50)
+
             
         
         
@@ -283,11 +291,13 @@ export default function doorCheck() {
 
         
         
-
+        return () => {
+            clearInterval(currentState)
+        }
 
         
 
-    })
+    }, [])
 
 
 
