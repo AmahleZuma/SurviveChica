@@ -294,6 +294,12 @@ export default function doorCheck() {
 
                     </div>
 
+                    {/* Toilet Cam */}
+                    <div className="toiletCam" style={{
+                        left: ROOMS.TOILET.x,
+                        top: ROOMS.TOILET.y
+                    }}></div>
+
 
                 </div>
             </>
