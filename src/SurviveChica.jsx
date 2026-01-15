@@ -65,6 +65,17 @@ export default function doorCheck() {
 
     // State for CCTV footage
     const [partyCam, setpartyCam] = useState("OFF");
+    const [kitchenCam, setkitchenCam] = useState("OFF");
+    const [storeCam, setstoreCam] = useState("OFF");
+    const [officeCam, setOfficeCam] = useState("OFF");
+    const [toiletCam, settoiletCam] = useState("OFF");
+
+
+    // Array of CCTV footage
+    const cctv = [partyCam, kitchenCam, storeCam, officeCam, toiletCam]
+
+    // Checking ig CCTV state is OFF
+    console.log(cctv)
 
 
 
@@ -101,34 +112,6 @@ export default function doorCheck() {
         });
 
     }
-
-    // Will look at the animatronics position relative to the rooms coordinates and decide on whether or not it is in that room
-    function isAnimatronicInRoom(animatronicPos, room) {
-
-        // Returns True for if within room, else False
-        return (
-            animatronicPos.x >= room.x &&                                   // Left
-            animatronicPos.x <= room.x + room.width &&                     // Right
-            animatronicPos.y >= room.y &&                                 // Top
-            animatronicPos.y <= room.y + room.height                      // Bottom
-        );
-    }
-
-    function isAnimatronicinDangerZone(animatronicPos, space) {
-        // Return true if so
-        return (
-            animatronicPos.x >= space.x &&
-            animatronicPos.x <= space.x + space.width &&
-            animatronicPos.y >= space.y &&
-            animatronicPos.y <= space.y + space.height
-        );
-
-    }
-
-
-
-
-
 
 
     // Chica's AI
@@ -223,21 +206,6 @@ export default function doorCheck() {
         
 
     }, [])
-
-
-
-    // Looping through the animatronics to see which one is in the danger zone
-    // animatronics.forEach(a => {
-    //     if (isAnimatronicinDangerZone(a.pos, DANGER.DOOR1) && doorStatus1==="OPEN") {
-    //         console.log(`GAME OVER - ${a.name} killed you`)
-    //     }
-    //     if (isAnimatronicinDangerZone(a.pos, DANGER.DOOR2) && doorStatus1==="OPEN") {
-    //         console.log(`GAME OVER - ${a.name} killed you`)
-    //     }
-    // })
-
-
-
 
 
 
