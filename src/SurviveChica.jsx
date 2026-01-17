@@ -64,7 +64,7 @@ export default function doorCheck() {
 
 
     // State for CCTV footage
-    const [partyCam, setpartyCam] = useState("OFF");
+    const [partyCam, setpartyCam] = useState("ON");
     const [kitchenCam, setkitchenCam] = useState("OFF");
     const [storeCam, setstoreCam] = useState("OFF");
     const [officeCam, setOfficeCam] = useState("OFF");
@@ -72,10 +72,23 @@ export default function doorCheck() {
 
 
     // Array of CCTV footage
-    const cctv = [partyCam, kitchenCam, storeCam, officeCam, toiletCam]
+    let cctv = [partyCam, kitchenCam, storeCam, officeCam, toiletCam]
 
     // Checking ig CCTV state is OFF
     console.log(cctv)
+
+    // Trying to iterate over an array forwards
+    function cctvCheckForward() {
+        let feed = 0
+        let currentFeed = cctv[feed];
+        console.log(currentFeed);
+        currentFeed === "OFF" ? "ON" : "OFF";
+        console.log(currentFeed)
+
+    }
+
+    cctvCheckForward();
+
 
 
 
