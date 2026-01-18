@@ -64,8 +64,8 @@ export default function doorCheck() {
 
 
     // State for CCTV footage
-    const [partyCam, setpartyCam] = useState("ON");
-    const [kitchenCam, setkitchenCam] = useState("OFF");
+    const [partyCam, setpartyCam] = useState("OFF");
+    const [kitchenCam, setkitchenCam] = useState("ON");
     const [storeCam, setstoreCam] = useState("OFF");
     const [officeCam, setOfficeCam] = useState("OFF");
     const [toiletCam, settoiletCam] = useState("OFF");
@@ -81,15 +81,35 @@ export default function doorCheck() {
     function cctvCheckForward() {
         let feed = 0
         let currentFeed = cctv[feed];
-        console.log(currentFeed);
-        currentFeed === "OFF" ? "ON" : "OFF";
-        console.log(currentFeed)
+        if (feed === 0) {
+            if (currentFeed === "OFF") {
+                currentFeed = setpartyCam("ON")
+            } else {
+                currentFeed = setpartyCam("OFF")
+            }
+            console.log(`party is ${currentFeed}`);
+        }
+
+        // if (feed === 1) {
+        //     console.log(feed);
+        //     if (currentFeed === "OFF") {
+        //         currentFeed === setkitchenCam("ON")
+        //     } else {
+        //         currentFeed === setkitchenCam("OFF")
+        //     }
+        //     console.log(`kitchen is ${currentFeed}`);
+        //     feed+=1;
+        // }
+
+        
 
     }
 
-    cctvCheckForward();
 
+    // This gets called every render loop
+    // cctvCheckForward();
 
+ 
 
 
 
@@ -310,8 +330,14 @@ export default function doorCheck() {
 
                 </div>
             </>
+
+            {/* Ambience button */}
             <button className="ambience" onClick={playBackground}>
                 Ambience {ambienceMode}
+            </button>
+
+            <button className="cctvForward" onClick={cctvCheckForward}>
+                ⏩
             </button>
         </div>
 
