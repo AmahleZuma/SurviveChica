@@ -86,7 +86,7 @@ export default function doorCheck() {
                 prev =>
                     prev === "OFF" ? "ON" : "OFF"
             )
-            console.log(partyCam)
+            feed +=1;
         }
 
         // if (feed === 1) {
@@ -103,6 +103,7 @@ export default function doorCheck() {
         
 
     }
+    console.log(`Party room is ${partyCam}`)
 
 
     // This gets called every render loop
