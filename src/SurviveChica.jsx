@@ -82,12 +82,11 @@ export default function doorCheck() {
         let feed = 0
         let currentFeed = cctv[feed];
         if (feed === 0) {
-            if (currentFeed === "OFF") {
-                currentFeed = setpartyCam("ON")
-            } else {
-                currentFeed = setpartyCam("OFF")
-            }
-            console.log(`party is ${currentFeed}`);
+            setpartyCam(
+                prev =>
+                    prev === "OFF" ? "ON" : "OFF"
+            )
+            console.log(partyCam)
         }
 
         // if (feed === 1) {
