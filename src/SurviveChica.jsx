@@ -64,8 +64,8 @@ export default function doorCheck() {
 
 
     // State for CCTV footage
-    const [partyCam, setpartyCam] = useState("ON");
-    const [kitchenCam, setkitchenCam] = useState("ON");
+    const [partyCam, setpartyCam] = useState("OFF");
+    const [kitchenCam, setkitchenCam] = useState("OFF");
     const [storeCam, setstoreCam] = useState("OFF");
     const [officeCam, setOfficeCam] = useState("OFF");
     const [toiletCam, settoiletCam] = useState("OFF");
@@ -95,22 +95,31 @@ export default function doorCheck() {
             );
         }
 
-        // if (feed === 1) {
-        //     console.log(feed);
-        //     if (currentFeed === "OFF") {
-        //         currentFeed === setkitchenCam("ON")
-        //     } else {
-        //         currentFeed === setkitchenCam("OFF")
-        //     }
-        //     console.log(`kitchen is ${currentFeed}`);
-        //     feed+=1;
-        // }
+        if (feedNum === 1) {
+            setpartyCam(
+                prev =>
+                    prev = "OFF"
+            )
+
+            setkitchenCam(
+                prev => 
+                    prev === "OFF" ? "ON" : "OFF"
+            );
+
+
+
+            setfeedNum(
+                prev =>
+                    prev + 1
+            )
+        }
 
         
 
     }
 
     console.log(`Party Room is now ${cctv[0]}`); // Debugging purposes need to see if the change happens
+    console.log(`Kitchen is now ${cctv[1]}`);
     console.log(`FeedNm is now ${feedNum}`);
 
 
