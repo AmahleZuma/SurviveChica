@@ -64,29 +64,35 @@ export default function doorCheck() {
 
 
     // State for CCTV footage
-    const [partyCam, setpartyCam] = useState("OFF");
+    const [partyCam, setpartyCam] = useState("ON");
     const [kitchenCam, setkitchenCam] = useState("ON");
     const [storeCam, setstoreCam] = useState("OFF");
     const [officeCam, setOfficeCam] = useState("OFF");
     const [toiletCam, settoiletCam] = useState("OFF");
+    const [feedNum, setfeedNum]  = useState(0)
 
 
     // Array of CCTV footage
     let cctv = [partyCam, kitchenCam, storeCam, officeCam, toiletCam]
 
-    // Checking ig CCTV state is OFF
-    console.log(cctv)
 
     // Trying to iterate over an array forwards
     function cctvCheckForward() {
-        let feed = 0
-        let currentFeed = cctv[feed];
-        if (feed === 0) {
+        // default is 0 which is partyCam
+        let currentFeed = cctv[feedNum];
+        if (feedNum === 0) {
             setpartyCam(
                 prev =>
                     prev === "OFF" ? "ON" : "OFF"
-            )
-            feed +=1;
+            );
+
+
+
+
+            setfeedNum(
+                prev => 
+                    prev + 1
+            );
         }
 
         // if (feed === 1) {
@@ -103,11 +109,11 @@ export default function doorCheck() {
         
 
     }
-    console.log(`Party room is ${partyCam}`)
+
+    console.log(`Party Room is now ${cctv[0]}`); // Debugging purposes need to see if the change happens
+    console.log(`FeedNm is now ${feedNum}`);
 
 
-    // This gets called every render loop
-    // cctvCheckForward();
 
  
 
