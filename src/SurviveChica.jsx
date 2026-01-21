@@ -63,76 +63,12 @@ export default function doorCheck() {
     const aniPos = { x: 500, y: 300 }
 
 
-    // State for CCTV footage
-    const [partyCam, setpartyCam] = useState("OFF");
-    const [kitchenCam, setkitchenCam] = useState("OFF");
-    const [storeCam, setstoreCam] = useState("OFF");
-    const [officeCam, setOfficeCam] = useState("OFF");
-    const [toiletCam, settoiletCam] = useState("OFF");
-    const [feedNum, setfeedNum]  = useState(0)
-
-
-    // Array of CCTV footage
-    let cctv = [partyCam, kitchenCam, storeCam, officeCam, toiletCam]
-
-
-    // Trying to iterate over an array forwards
-    function cctvCheckForward() {
-        // default is 0 which is partyCam
-        let currentFeed = cctv[feedNum];
-        if (feedNum === 0) {
-            setpartyCam(
-                prev =>
-                    prev === "OFF" ? "ON" : "OFF"
-            );
-
-
-
-
-            setfeedNum(
-                prev => 
-                    prev + 1
-            );
-        }
-
-        if (feedNum === 1) {
-            setpartyCam(
-                prev =>
-                    prev = "OFF"
-            );
-
-            setkitchenCam(
-                prev => 
-                    prev === "OFF" ? "ON" : "OFF"
-            );
-
-
-
-            setfeedNum(
-                prev =>
-                    prev + 1
-            )
-        }
-
-        
-
-    }
-
-    // Only after I have clicked the button
-    useEffect(() => {
-        console.log(`Party Room is now ${cctv[0]}`); // Debugging purposes need to see if the change happens
-        console.log(`Kitchen is now ${cctv[1]}`);
-        console.log(`FeedNm is now ${feedNum}`);
-    }, [partyCam, kitchenCam, feedNum])
 
 
 
 
 
- 
-
-
-
+    // Door and Background Noise
     function changeDoor1() {
         setdoorStatus1(prev =>
             prev === "OPEN" ? "CLOSED" : "OPEN"
@@ -167,98 +103,225 @@ export default function doorCheck() {
     }
 
 
-    // Chica's AI
+
+
+
+    // State for CCTV footage
+    const [partyCam, setpartyCam] = useState("OFF");
+    const [kitchenCam, setkitchenCam] = useState("OFF");
+    const [storeCam, setstoreCam] = useState("OFF");
+    const [officeCam, setOfficeCam] = useState("OFF");
+    const [toiletCam, settoiletCam] = useState("OFF");
+    const [feedNum, setfeedNum]  = useState(0)
+
+
+    // Array of CCTV footage
+    let cctv = [partyCam, kitchenCam, storeCam, officeCam, toiletCam]
+
+
+    // Trying to iterate over an array forwards
+    function cctvCheckForward() {
+        // default is 0 which is partyCam
+        let currentFeed = cctv[feedNum];
+
+
+        // Party Cam
+        if (feedNum === 0) {
+            settoiletCam(prev =>
+                prev = "OFF"
+            );
+
+            setpartyCam(prev =>
+                prev = "ON"
+            );
+
+            setfeedNum( prev => 
+                prev + 1
+            );
+        }
+
+        // Kitchen Cam
+        if (feedNum === 1) {
+            setpartyCam(prev =>
+                prev = "OFF"
+            );
+
+            setkitchenCam( prev => 
+                prev = "ON"
+            );
+
+            setfeedNum( prev =>
+                prev + 1
+            )
+        }
+
+        // Store Cam
+        if (feedNum === 2) {
+            setkitchenCam(prev =>
+                prev = "OFF"
+            );
+
+            setstoreCam(prev => 
+                prev = "ON"
+            );
+
+            setfeedNum(prev => 
+                prev + 1
+            );
+        }
+
+        // Office Cam
+        if (feedNum === 3) {
+            setstoreCam(prev =>
+                prev = "OFF"
+            );
+
+            setOfficeCam(prev => 
+                prev = "ON"
+            );
+
+            setfeedNum(prev =>
+                prev + 1
+            );
+        }
+
+        // Toilet Cam 
+        if (feedNum === 4) {
+            setOfficeCam(prev =>
+                prev = "OFF"
+            );
+
+            settoiletCam(prev =>
+                prev = "ON"
+            );
+
+            setfeedNum(prev =>
+                prev = 0
+            )
+        }
+
+        
+
+    }
+
+
+    // Closes everything and resets values
+    function closeCCTV() {
+        setpartyCam("OFF");
+        setkitchenCam("OFF");
+        setstoreCam("OFF");
+        setOfficeCam("OFF");
+        settoiletCam("OFF");
+        setfeedNum(0);
+    };
+
+    // Only after I have clicked the forward button
     useEffect(() => {
-
-        const aggression = 5 // no clue wht to do with this, just putting it here
-        const roamSpeed = 2;
-        const sprintSpeed = 10;
-        let currentState;
-
-
-
-
-
-        const waitcheck = () => {
-            console.log("Wait is finished")
-
-            // Turning rooms into keys
-            // sorts rooms into arrays
-            const roomsArray = Object.keys(ROOMS)
-
-            // Creates index to pick from
-            const roomsIndex = Math.floor(Math.random() * roomsArray.length);
-
-            // Random room will be picked
-            const rooms = roomsArray[roomsIndex]
-
-            // This will help me get the range so chica wont go to a specific coordinate but more inside the space
-            const maxValX = ROOMS[rooms].x + ROOMS[rooms].width;
-            const minValX = ROOMS[rooms].x
-
-            const maxValY = ROOMS[rooms].y + ROOMS[rooms].height;
-            const minValY = ROOMS[rooms].y
-
-            const rangeX = maxValX - minValX;
-            const rangeY = maxValY - minValY;
-
-            // Creates a random width and height to add to the minimum => 
-            const randWidth = Math.floor(Math.random() * (rangeX + 1));
-            const randHeight = Math.floor(Math.random() * (rangeY + 1));
-
-            // Chica will go to a random location inside a room not a specific coordinate
-            const roomX = randWidth + minValX;
-            const roomY = randHeight + minValY
+        console.log(`Party Room is now ${partyCam}`); // Debugging purposes need to see if the change happens
+        console.log(`Kitchen is now ${kitchenCam}`);
+        console.log(`Store Room is now ${storeCam}`);
+        console.log(`Office is now ${officeCam}`);
+        console.log(`Toilet is now ${toiletCam}`);
+        console.log(`FeedNm is now ${feedNum}`);
+    }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam,feedNum])
 
 
-            let chicaRoam;
 
-            // ROAM
-            chicaRoam = setInterval(() => {
+
+
+
+    // // Chica's AI
+    // useEffect(() => {
+
+    //     const aggression = 5 // no clue wht to do with this, just putting it here
+    //     const roamSpeed = 2;
+    //     const sprintSpeed = 10;
+    //     let currentState;
+
+
+
+
+
+    //     const waitcheck = () => {
+    //         console.log("Wait is finished")
+
+    //         // Turning rooms into keys
+    //         // sorts rooms into arrays
+    //         const roomsArray = Object.keys(ROOMS)
+
+    //         // Creates index to pick from
+    //         const roomsIndex = Math.floor(Math.random() * roomsArray.length);
+
+    //         // Random room will be picked
+    //         const rooms = roomsArray[roomsIndex]
+
+    //         // This will help me get the range so chica wont go to a specific coordinate but more inside the space
+    //         const maxValX = ROOMS[rooms].x + ROOMS[rooms].width;
+    //         const minValX = ROOMS[rooms].x
+
+    //         const maxValY = ROOMS[rooms].y + ROOMS[rooms].height;
+    //         const minValY = ROOMS[rooms].y
+
+    //         const rangeX = maxValX - minValX;
+    //         const rangeY = maxValY - minValY;
+
+    //         // Creates a random width and height to add to the minimum => 
+    //         const randWidth = Math.floor(Math.random() * (rangeX + 1));
+    //         const randHeight = Math.floor(Math.random() * (rangeY + 1));
+
+    //         // Chica will go to a random location inside a room not a specific coordinate
+    //         const roomX = randWidth + minValX;
+    //         const roomY = randHeight + minValY
+
+
+    //         let chicaRoam;
+
+    //         // ROAM
+    //         chicaRoam = setInterval(() => {
                 
-                const dx = roomX - chicaRef.current.x;
-                const dy = roomY - chicaRef.current.y;
+    //             const dx = roomX - chicaRef.current.x;
+    //             const dy = roomY - chicaRef.current.y;
 
-                const distance = Math.sqrt(dx**2 + dy**2);
+    //             const distance = Math.sqrt(dx**2 + dy**2);
 
 
 
-                setchicaPos({...chicaRef.current})
+    //             setchicaPos({...chicaRef.current})
 
-                // Back to wait but wait how the fuck do i loop this without hard coding
-                if (distance <= 15) {
-                    console.log("ARRIVED. Stopping Interval....");
-                    clearInterval(chicaRoam);
-                    setTimeout(waitcheck, 13000)
-                    return;
-                }
+    //             // Back to wait but wait how the fuck do i loop this without hard coding
+    //             if (distance <= 15) {
+    //                 console.log("ARRIVED. Stopping Interval....");
+    //                 clearInterval(chicaRoam);
+    //                 setTimeout(waitcheck, 13000)
+    //                 return;
+    //             }
 
-                const nx = dx/distance;
-                const ny = dy/distance;
+    //             const nx = dx/distance;
+    //             const ny = dy/distance;
 
-                chicaRef.current.x += nx * roamSpeed;
-                chicaRef.current.y += ny * roamSpeed;
+    //             chicaRef.current.x += nx * roamSpeed;
+    //             chicaRef.current.y += ny * roamSpeed;
 
-                console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
+    //             console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
                 
-            },50)
+    //         },50)
 
             
         
         
         
-        }
-        currentState = setTimeout(waitcheck, 13000);
+    //     }
+    //     currentState = setTimeout(waitcheck, 13000);
 
         
         
-        return () => {
-            clearInterval(currentState)
-        }
+    //     return () => {
+    //         clearInterval(currentState)
+    //     }
 
         
 
-    }, [])
+    // }, [])
 
 
 
@@ -358,6 +421,10 @@ export default function doorCheck() {
 
             <button className="cctvForward" onClick={cctvCheckForward}>
                 ⏩
+            </button>
+
+            <button className="closeCCTV" onClick={closeCCTV}>
+                ❎
             </button>
         </div>
 
