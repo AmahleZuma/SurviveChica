@@ -99,7 +99,7 @@ export default function doorCheck() {
             setpartyCam(
                 prev =>
                     prev = "OFF"
-            )
+            );
 
             setkitchenCam(
                 prev => 
@@ -118,9 +118,14 @@ export default function doorCheck() {
 
     }
 
-    console.log(`Party Room is now ${cctv[0]}`); // Debugging purposes need to see if the change happens
-    console.log(`Kitchen is now ${cctv[1]}`);
-    console.log(`FeedNm is now ${feedNum}`);
+    // Only after I have clicked the button
+    useEffect(() => {
+        console.log(`Party Room is now ${cctv[0]}`); // Debugging purposes need to see if the change happens
+        console.log(`Kitchen is now ${cctv[1]}`);
+        console.log(`FeedNm is now ${feedNum}`);
+    }, [partyCam, kitchenCam, feedNum])
+
+
 
 
 
