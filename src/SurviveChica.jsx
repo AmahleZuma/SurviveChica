@@ -423,8 +423,8 @@ export default function doorCheck() {
             </button>
 
             {/* Need to find a way to control css using this button */}
-            {/* Trying to think of the solution here */}
-            <button className="cctvForward" onClick={() => {cctvCheckForward}}>
+            {/* This rewuires some conditional rendering */}
+            <button className="cctvForward" onClick={cctvCheckForward}>
                 ⏩
             </button>
 
