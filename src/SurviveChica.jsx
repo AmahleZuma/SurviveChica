@@ -62,6 +62,9 @@ export default function doorCheck() {
     // Testing if the function works
     const aniPos = { x: 500, y: 300 }
 
+    // Global var for current feed
+    let currentFeed;
+
 
 
 
@@ -122,7 +125,7 @@ export default function doorCheck() {
     // Trying to iterate over an array forwards
     function cctvCheckForward() {
         // default is 0 which is partyCam
-        let currentFeed = cctv[feedNum];
+        currentFeed = cctv[feedNum];
 
 
         // Party Cam
@@ -420,7 +423,8 @@ export default function doorCheck() {
             </button>
 
             {/* Need to find a way to control css using this button */}
-            <button className="cctvForward" onClick={cctvCheckForward}>
+            {/* Trying to think of the solution here */}
+            <button className="cctvForward" onClick={() => {cctvCheckForward}}>
                 ⏩
             </button>
 
