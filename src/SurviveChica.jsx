@@ -373,6 +373,8 @@ export default function doorCheck() {
                         Guard
                     </div>
 
+
+                    {/* Used something called Short Circuit evaluation: If the left side is TRUE then the right side will be rendered, if FALSE then the right side will be ignored */}
                     {/* PartyCam */}
                     {partyCam === "OFF" && (<div className="partyCam" style={{
                         left: ROOMS.PARTY.x,
