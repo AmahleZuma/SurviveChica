@@ -374,45 +374,45 @@ export default function doorCheck() {
                     </div>
 
                     {/* PartyCam */}
-                    <div className="partyCam" style={{
+                    {partyCam === "OFF" && (<div className="partyCam" style={{
                         left: ROOMS.PARTY.x,
                         top: ROOMS.PARTY.y
                     }}>
                         <p>Party-Area</p>
-                    </div>
+                    </div>)}
 
                     {/* Toilet Cam */}
-                    <div className="toiletCam" style={{
+                    {toiletCam === "OFF" && (<div className="toiletCam" style={{
                         left: ROOMS.TOILET.x,
                         top: ROOMS.TOILET.y
                     }}>
                         <p>Toilet</p>
                         
-                    </div>
+                    </div>)}
 
                     {/* Store Room Cam */}
-                    <div className="storeCam" style={{
+                    {storeCam === "OFF" && (<div className="storeCam" style={{
                         left: ROOMS.STORE.x,
                         top: ROOMS.STORE.y
                     }}>
                         <p>Store-Room</p>
-                    </div>
+                    </div>)}
 
                     {/* Kitchen Cam */}
-                    <div className="kitchenCam" style={{
+                    {kitchenCam === "OFF" && (<div className="kitchenCam" style={{
                         left: ROOMS.KITCHEN.x,
                         top: ROOMS.KITCHEN.y
                     }}>
                         <p>Kitchen</p>
-                    </div>
+                    </div>)}
 
                     {/* Office Cam */}
-                    <div className="officeCam" style={{
+                    {officeCam === "OFF" && (<div className="officeCam" style={{
                         left: ROOMS.OFFICE.x,
                         top: ROOMS.OFFICE.y
                     }}>
                         <p>Office</p>
-                    </div>
+                    </div>)}
 
                 </div>
             </>
@@ -422,8 +422,8 @@ export default function doorCheck() {
                 Ambience {ambienceMode}
             </button>
 
-            {/* Need to find a way to control css using this button */}
-            {/* This rewuires some conditional rendering */}
+            {/* Need to find a way to control css using this button  */}
+            {/* This rewuires some conditional rendering...and it is called short circuit evaluation */}
             <button className="cctvForward" onClick={cctvCheckForward}>
                 ⏩
             </button>
