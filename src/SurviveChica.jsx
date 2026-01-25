@@ -63,7 +63,7 @@ export default function doorCheck() {
     const aniPos = { x: 500, y: 300 }
 
     // Global var for current feed
-    let currentFeed;
+    const [currentFeed, setcurrentFeed] = useState(null);
 
 
 
@@ -76,7 +76,7 @@ export default function doorCheck() {
         setdoorStatus1(prev =>
             prev === "OPEN" ? "CLOSED" : "OPEN"
         );
-        console.log(``)
+        console.log(`Door1 is closed`);
 
 
         // Door close sound effect
@@ -84,12 +84,13 @@ export default function doorCheck() {
 
     };
 
-    // Automatically sets door to open
+    // Automatically sets door1 to open
     useEffect(() => {
 
         if (doorStatus1 === "CLOSED") {
             const timer = setTimeout(() => {
                 setdoorStatus1("OPEN");
+                console.log("Door1 is open")
                 playdoorClose();
             }, 5000);
 
@@ -103,10 +104,27 @@ export default function doorCheck() {
         setdoorStatus2(prev =>
             prev === "OPEN" ? "CLOSED" : "OPEN"
         );
+        console.log(`Door2 is closed`);
 
         // Door close sound effect
         playdoorClose();
     };
+
+    // Automatically sets door2 to open
+    useEffect(() => {
+
+        if (doorStatus2 === "CLOSED") {
+            const timer = setTimeout(() => {
+                setdoorStatus2("OPEN");
+                console.log("Door2 is open")
+                playdoorClose();
+            }, 5000);
+
+            return() => clearInterval(timer)
+        }
+        
+
+    }, [doorStatus2]);
 
     // Toggle on or off for background noise
     function playBackground() {
@@ -142,7 +160,7 @@ export default function doorCheck() {
     // Trying to iterate over an array forwards
     function cctvCheckForward() {
         // default is 0 which is partyCam
-        currentFeed = cctv[feedNum];
+        setcurrentFeed(cctv[feedNum]);
 
 
         // Party Cam
@@ -244,6 +262,18 @@ export default function doorCheck() {
         console.log(`Toilet is now ${toiletCam}`);
         console.log(`FeedNm is now ${feedNum}`);
     }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam,feedNum])
+
+    // Automatically closes CCTV
+
+    useEffect(() => {
+        if (currentFeed) {
+            const timer = setTimeout(() => {
+                console.log('CCTV is OFF')
+                closeCCTV()
+            }, 7000);
+            return() => clearInterval(timer)
+        }
+    }, [currentFeed])
 
 
 
