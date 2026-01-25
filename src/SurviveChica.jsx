@@ -94,7 +94,7 @@ export default function doorCheck() {
                 playdoorClose();
             }, 5000);
 
-            return() => clearInterval(timer)
+            return() => clearTimeout(timer)
         }
         
 
@@ -120,7 +120,7 @@ export default function doorCheck() {
                 playdoorClose();
             }, 5000);
 
-            return() => clearInterval(timer)
+            return() => clearTimeout(timer)
         }
         
 
@@ -266,12 +266,12 @@ export default function doorCheck() {
     // Automatically closes CCTV
 
     useEffect(() => {
-        if (currentFeed) {
+        if (currentFeed !== null) {
             const timer = setTimeout(() => {
                 console.log('CCTV is OFF')
                 closeCCTV()
             }, 7000);
-            return() => clearInterval(timer)
+            return() => clearTimeout(timer)
         }
     }, [currentFeed])
 
@@ -366,7 +366,7 @@ export default function doorCheck() {
         
         
         return () => {
-            clearInterval(currentState)
+            clearTimeout(currentState)
         }
 
         
