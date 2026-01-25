@@ -76,11 +76,28 @@ export default function doorCheck() {
         setdoorStatus1(prev =>
             prev === "OPEN" ? "CLOSED" : "OPEN"
         );
+        console.log(``)
+
 
         // Door close sound effect
         playdoorClose();
 
     };
+
+    // Automatically sets door to open
+    useEffect(() => {
+
+        if (doorStatus1 === "CLOSED") {
+            const timer = setTimeout(() => {
+                setdoorStatus1("OPEN");
+                playdoorClose();
+            }, 5000);
+
+            return() => clearInterval(timer)
+        }
+        
+
+    }, [doorStatus1]);
 
     function changeDoor2() {
         setdoorStatus2(prev =>
@@ -234,97 +251,97 @@ export default function doorCheck() {
 
 
     // // Chica's AI
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     const aggression = 5 // no clue wht to do with this, just putting it here
-    //     const roamSpeed = 2;
-    //     const sprintSpeed = 10;
-    //     let currentState;
-
-
+        const aggression = 5 // no clue wht to do with this, just putting it here
+        const roamSpeed = 2;
+        const sprintSpeed = 10;
+        let currentState;
 
 
 
-    //     const waitcheck = () => {
-    //         console.log("Wait is finished")
-
-    //         // Turning rooms into keys
-    //         // sorts rooms into arrays
-    //         const roomsArray = Object.keys(ROOMS)
-
-    //         // Creates index to pick from
-    //         const roomsIndex = Math.floor(Math.random() * roomsArray.length);
-
-    //         // Random room will be picked
-    //         const rooms = roomsArray[roomsIndex]
-
-    //         // This will help me get the range so chica wont go to a specific coordinate but more inside the space
-    //         const maxValX = ROOMS[rooms].x + ROOMS[rooms].width;
-    //         const minValX = ROOMS[rooms].x
-
-    //         const maxValY = ROOMS[rooms].y + ROOMS[rooms].height;
-    //         const minValY = ROOMS[rooms].y
-
-    //         const rangeX = maxValX - minValX;
-    //         const rangeY = maxValY - minValY;
-
-    //         // Creates a random width and height to add to the minimum => 
-    //         const randWidth = Math.floor(Math.random() * (rangeX + 1));
-    //         const randHeight = Math.floor(Math.random() * (rangeY + 1));
-
-    //         // Chica will go to a random location inside a room not a specific coordinate
-    //         const roomX = randWidth + minValX;
-    //         const roomY = randHeight + minValY
 
 
-    //         let chicaRoam;
+        const waitcheck = () => {
+            console.log("Wait is finished")
 
-    //         // ROAM
-    //         chicaRoam = setInterval(() => {
+            // Turning rooms into keys
+            // sorts rooms into arrays
+            const roomsArray = Object.keys(ROOMS)
+
+            // Creates index to pick from
+            const roomsIndex = Math.floor(Math.random() * roomsArray.length);
+
+            // Random room will be picked
+            const rooms = roomsArray[roomsIndex]
+
+            // This will help me get the range so chica wont go to a specific coordinate but more inside the space
+            const maxValX = ROOMS[rooms].x + ROOMS[rooms].width;
+            const minValX = ROOMS[rooms].x
+
+            const maxValY = ROOMS[rooms].y + ROOMS[rooms].height;
+            const minValY = ROOMS[rooms].y
+
+            const rangeX = maxValX - minValX;
+            const rangeY = maxValY - minValY;
+
+            // Creates a random width and height to add to the minimum => 
+            const randWidth = Math.floor(Math.random() * (rangeX + 1));
+            const randHeight = Math.floor(Math.random() * (rangeY + 1));
+
+            // Chica will go to a random location inside a room not a specific coordinate
+            const roomX = randWidth + minValX;
+            const roomY = randHeight + minValY
+
+
+            let chicaRoam;
+
+            // ROAM
+            chicaRoam = setInterval(() => {
                 
-    //             const dx = roomX - chicaRef.current.x;
-    //             const dy = roomY - chicaRef.current.y;
+                const dx = roomX - chicaRef.current.x;
+                const dy = roomY - chicaRef.current.y;
 
-    //             const distance = Math.sqrt(dx**2 + dy**2);
+                const distance = Math.sqrt(dx**2 + dy**2);
 
 
 
-    //             setchicaPos({...chicaRef.current})
+                setchicaPos({...chicaRef.current})
 
-    //             // Back to wait but wait how the fuck do i loop this without hard coding
-    //             if (distance <= 15) {
-    //                 console.log("ARRIVED. Stopping Interval....");
-    //                 clearInterval(chicaRoam);
-    //                 setTimeout(waitcheck, 13000)
-    //                 return;
-    //             }
+                // Back to wait but wait how the fuck do i loop this without hard coding
+                if (distance <= 15) {
+                    console.log("ARRIVED. Stopping Interval....");
+                    clearInterval(chicaRoam);
+                    setTimeout(waitcheck, 13000)
+                    return;
+                }
 
-    //             const nx = dx/distance;
-    //             const ny = dy/distance;
+                const nx = dx/distance;
+                const ny = dy/distance;
 
-    //             chicaRef.current.x += nx * roamSpeed;
-    //             chicaRef.current.y += ny * roamSpeed;
+                chicaRef.current.x += nx * roamSpeed;
+                chicaRef.current.y += ny * roamSpeed;
 
-    //             console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
+                console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
                 
-    //         },50)
+            },50)
 
             
         
         
         
-    //     }
-    //     currentState = setTimeout(waitcheck, 13000);
+        }
+        currentState = setTimeout(waitcheck, 13000);
 
         
         
-    //     return () => {
-    //         clearInterval(currentState)
-    //     }
+        return () => {
+            clearInterval(currentState)
+        }
 
         
 
-    // }, [])
+    }, [])
 
 
 
