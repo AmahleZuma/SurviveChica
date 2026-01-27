@@ -264,7 +264,7 @@ export default function doorCheck() {
     }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam,feedNum])
 
     // Automatically closes CCTV
-
+    // Need to check if the camera feed is on not if I clicked the button
     useEffect(() => {
         if (currentFeed !== null) {
             const timer = setTimeout(() => {
