@@ -92,7 +92,7 @@ export default function doorCheck() {
                 setdoorStatus1("OPEN");
                 console.log("Door1 is open")
                 playdoorClose();
-            }, 5000);
+            }, 7000);
 
             return() => clearTimeout(timer)
         }
@@ -118,7 +118,7 @@ export default function doorCheck() {
                 setdoorStatus2("OPEN");
                 console.log("Door2 is open")
                 playdoorClose();
-            }, 5000);
+            }, 7000);
 
             return() => clearTimeout(timer)
         }
@@ -264,16 +264,19 @@ export default function doorCheck() {
     }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam,feedNum])
 
     // Automatically closes CCTV
-    // Need to check if the camera feed is on not if I clicked the button
+    // Checks if any camera is on 
     useEffect(() => {
-        if (currentFeed !== null) {
+
+        const anyCam = partyCam === "ON" || kitchenCam === "ON" || storeCam === "ON" || officeCam === "ON" || toiletCam === "ON";
+
+        if (anyCam) {
             const timer = setTimeout(() => {
                 console.log('CCTV is OFF')
                 closeCCTV()
-            }, 7000);
+            }, 999);
             return() => clearTimeout(timer)
         }
-    }, [currentFeed])
+    }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam])
 
 
 
