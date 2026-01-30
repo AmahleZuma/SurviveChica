@@ -286,9 +286,8 @@ export default function doorCheck() {
     // // Chica's AI
     useEffect(() => {
 
-        const aggression = 5 // no clue wht to do with this, just putting it here
         const roamSpeed = 2;
-        const sprintSpeed = 10;
+        const sprintSpeed = 4;
         let currentState;
 
 
@@ -302,7 +301,7 @@ export default function doorCheck() {
             // sorts rooms into arrays
             const roomsArray = Object.keys(ROOMS)
 
-            // Creates index to pick from
+            // Creates index to pick from(random)
             const roomsIndex = Math.floor(Math.random() * roomsArray.length);
 
             // Random room will be picked
@@ -347,15 +346,70 @@ export default function doorCheck() {
                     clearInterval(chicaRoam);
                     setTimeout(waitcheck, 13000)
                     return;
+                };
+
+                // Making changing rooms easier
+                let targetX = roomX;
+                let targetY = roomY;
+                let speed = roamSpeed;
+
+
+                // Sprint State
+
+                        // Door 1 danger zone distance check
+                let doorx1 = DANGERZONES.DOOR1.x - chicaRef.current.x;
+                let doory1 = DANGERZONES.DOOR1.y - chicaRef.current.y;
+                const door1Dist = Math.sqrt(doorx1 ** 2 + doory1 ** 2);
+
+                        // Door 2 danger zone distance check
+                let doorx2 = DANGERZONES.DOOR2.x - chicaRef.current.x;
+                let doory2 = DANGERZONES.DOOR2.y - chicaRef.current.y;
+                const door2Dist = Math.sqrt(doorx2 ** 2 + doory2 ** 2);
+
+                        // Allowing speed to be aggressive
+
+                if (door1Dist < 500) {
+
+                    // Moving chica to door 1
+                    speed = sprintSpeed;
+                    targetX = DANGERZONES.DOOR1.x;
+                    targetY = DANGERZONES.DOOR1.y;
+
+                    const ndx1 = doorx1/door1Dist;
+                    const ndy1 = doory1/door1Dist;
+
+
+                    chicaRef.current.x += ndx1 * speed;
+                    chicaRef.current.y += ndy1 * speed;
+
+                } else if (door2Dist < 500) {
+                    speed = sprintSpeed;
+                    targetX = DANGERZONES.DOOR2.x;
+                    targetY = DANGERZONES.DOOR2.y;
+
+                    const ndx2 = doorx2/door2Dist;
+                    const ndy2 = doory2/door2Dist;
+
+
+                    chicaRef.current.x += ndx2 * speed;
+                    chicaRef.current.y += ndy2 * speed;   
+                } else {
+                    const nx = dx/distance;
+                    const ny = dy/distance;
+
+                    chicaRef.current.x += nx * roamSpeed;
+                    chicaRef.current.y += ny * roamSpeed; 
+                    console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
                 }
 
-                const nx = dx/distance;
-                const ny = dy/distance;
 
-                chicaRef.current.x += nx * roamSpeed;
-                chicaRef.current.y += ny * roamSpeed;
 
-                console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
+
+
+
+                
+
+
                 
             },50)
 
@@ -364,7 +418,7 @@ export default function doorCheck() {
         
         
         }
-        currentState = setTimeout(waitcheck, 13000);
+        currentState = setTimeout(waitcheck, 5000);
 
         
         
