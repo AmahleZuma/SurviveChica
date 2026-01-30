@@ -36,11 +36,14 @@ export default function doorCheck() {
     const [doorStatus1, setdoorStatus1] = useState("OPEN");
 
     // Door 1 ref
-    const door1 = useRef({x:450, y:0});
+    const door1Ref = useRef("OPEN");
 
     // If you dont make a separate variable, both elements are affected at once
     // Door 2
     const [doorStatus2, setdoorStatus2] = useState("OPEN");
+
+    // Door 2 ref
+    const door2Ref = useRef("OPEN");
 
     // This plays the door sound
     const [playdoorClose] = useSound(doorClose, { volume: 1 });
@@ -68,7 +71,7 @@ export default function doorCheck() {
 
 
 
-
+// Need to add the door refs insice...dont forget the {}
 
 
     // Door and Background Noise
@@ -382,6 +385,9 @@ export default function doorCheck() {
                     chicaRef.current.x += ndx1 * speed;
                     chicaRef.current.y += ndy1 * speed;
 
+                    // Checking if youre in the danger zone TODO: FINISH DANGERZONE CHECK
+                    if (door1Dist <= 15 ) {}
+
                 } else if (door2Dist < 500) {
                     speed = sprintSpeed;
                     targetX = DANGERZONES.DOOR2.x;
@@ -392,7 +398,9 @@ export default function doorCheck() {
 
 
                     chicaRef.current.x += ndx2 * speed;
-                    chicaRef.current.y += ndy2 * speed;   
+                    chicaRef.current.y += ndy2 * speed; 
+                    
+                    
                 } else {
                     const nx = dx/distance;
                     const ny = dy/distance;
