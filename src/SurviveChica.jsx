@@ -3,6 +3,7 @@ import { useSound } from 'use-sound';
 import './Securityroom.css'
 import doorClose from './sfx/doorOpen.mp3';
 import ambience from './sfx/ambience.mp3';
+import video from './video/jumpscare.mp4'
 
 
 
@@ -19,7 +20,11 @@ const ROOMS = {
 
 const DANGERZONES = {
     DOOR1: { x: 450, y: 0, width: 300, height: 205 },
-    DOOR2: { x: 1150, y: 0, width: 300, height: 205 }
+    DOOR2: { x: 1550, y: 0, width: 300, height: 205 }
+}
+
+const SPAWN = {
+    POINT: {x: 500, y: 570},
 }
 
 
@@ -59,26 +64,26 @@ export default function doorCheck() {
     const [chicaPos, setchicaPos] = useState({ x: 500, y: 570 });
 
     // Chica ref position
-    const chicaRef = useRef({x:500,y:570})
+    const chicaRef = useRef({ x: 500, y: 570 })
 
-
-    // Testing if the function works
-    const aniPos = { x: 500, y: 300 }
-
-    // Global var for current feed
-    const [currentFeed, setcurrentFeed] = useState(null);
+    // Game Over function
+    const [gameOver, setgameOver] = useState(false)
 
 
 
 
-// Need to add the door refs insice...dont forget the {}
+
+
+    // Need to add the door refs insice...dont forget the {}
 
 
     // Door and Background Noise
     function changeDoor1() {
-        setdoorStatus1(prev =>
-            prev === "OPEN" ? "CLOSED" : "OPEN"
-        );
+        setdoorStatus1(prev => {
+            const newStatus = prev === "OPEN" ? "CLOSED" : "OPEN";
+            door1Ref.current = newStatus;
+            return newStatus;
+        });
         console.log(`Door1 is closed`);
 
 
@@ -93,20 +98,23 @@ export default function doorCheck() {
         if (doorStatus1 === "CLOSED") {
             const timer = setTimeout(() => {
                 setdoorStatus1("OPEN");
+                door1Ref.current = "OPEN";
                 console.log("Door1 is open")
                 playdoorClose();
             }, 7000);
 
-            return() => clearTimeout(timer)
+            return () => clearTimeout(timer)
         }
-        
+
 
     }, [doorStatus1]);
 
     function changeDoor2() {
-        setdoorStatus2(prev =>
-            prev === "OPEN" ? "CLOSED" : "OPEN"
-        );
+        setdoorStatus2(prev => {
+            const newStatus = prev === "OPEN" ? "CLOSED" : "OPEN";
+            door2Ref.current = newStatus;
+            return newStatus;
+        });
         console.log(`Door2 is closed`);
 
         // Door close sound effect
@@ -119,13 +127,14 @@ export default function doorCheck() {
         if (doorStatus2 === "CLOSED") {
             const timer = setTimeout(() => {
                 setdoorStatus2("OPEN");
+                door2Ref.current = "OPEN";
                 console.log("Door2 is open")
                 playdoorClose();
             }, 7000);
 
-            return() => clearTimeout(timer)
+            return () => clearTimeout(timer)
         }
-        
+
 
     }, [doorStatus2]);
 
@@ -153,7 +162,7 @@ export default function doorCheck() {
     const [storeCam, setstoreCam] = useState("OFF");
     const [officeCam, setOfficeCam] = useState("OFF");
     const [toiletCam, settoiletCam] = useState("OFF");
-    const [feedNum, setfeedNum]  = useState(0)
+    const [feedNum, setfeedNum] = useState(0)
 
 
     // Array of CCTV footage
@@ -162,8 +171,6 @@ export default function doorCheck() {
 
     // Trying to iterate over an array forwards
     function cctvCheckForward() {
-        // default is 0 which is partyCam
-        setcurrentFeed(cctv[feedNum]);
 
 
         // Party Cam
@@ -176,7 +183,7 @@ export default function doorCheck() {
                 prev = "ON"
             );
 
-            setfeedNum( prev => 
+            setfeedNum(prev =>
                 prev + 1
             );
         }
@@ -187,11 +194,11 @@ export default function doorCheck() {
                 prev = "OFF"
             );
 
-            setkitchenCam( prev => 
+            setkitchenCam(prev =>
                 prev = "ON"
             );
 
-            setfeedNum( prev =>
+            setfeedNum(prev =>
                 prev + 1
             )
         }
@@ -202,11 +209,11 @@ export default function doorCheck() {
                 prev = "OFF"
             );
 
-            setstoreCam(prev => 
+            setstoreCam(prev =>
                 prev = "ON"
             );
 
-            setfeedNum(prev => 
+            setfeedNum(prev =>
                 prev + 1
             );
         }
@@ -217,7 +224,7 @@ export default function doorCheck() {
                 prev = "OFF"
             );
 
-            setOfficeCam(prev => 
+            setOfficeCam(prev =>
                 prev = "ON"
             );
 
@@ -241,7 +248,7 @@ export default function doorCheck() {
             )
         }
 
-        
+
 
     }
 
@@ -264,7 +271,7 @@ export default function doorCheck() {
         console.log(`Office is now ${officeCam}`);
         console.log(`Toilet is now ${toiletCam}`);
         console.log(`FeedNm is now ${feedNum}`);
-    }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam,feedNum])
+    }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam, feedNum])
 
     // Automatically closes CCTV
     // Checks if any camera is on 
@@ -277,12 +284,18 @@ export default function doorCheck() {
                 console.log('CCTV is OFF')
                 closeCCTV()
             }, 999);
-            return() => clearTimeout(timer)
+            return () => clearTimeout(timer)
         }
     }, [partyCam, kitchenCam, storeCam, officeCam, toiletCam])
 
 
 
+    function jumpScare() {
+        return (
+            <video className="vid" src={video} autoPlay></video>
+
+        )
+    }
 
 
 
@@ -330,18 +343,36 @@ export default function doorCheck() {
 
 
             let chicaRoam;
+            let bolting = false
 
             // ROAM
             chicaRoam = setInterval(() => {
-                
+
                 const dx = roomX - chicaRef.current.x;
                 const dy = roomY - chicaRef.current.y;
 
-                const distance = Math.sqrt(dx**2 + dy**2);
+                const distance = Math.sqrt(dx ** 2 + dy ** 2);
 
 
 
-                setchicaPos({...chicaRef.current})
+                setchicaPos({ ...chicaRef.current })
+
+                // Bolting to kitchen - runs before everything else
+                if (bolting) {
+                    const sdx = SPAWN.POINT.x - chicaRef.current.x;
+                    const sdy = SPAWN.POINT.y - chicaRef.current.y;
+                    const spawnDist = Math.sqrt(sdx**2 + sdy**2);
+                    const snx = sdx / spawnDist;
+                    const sny = sdy / spawnDist;
+                    chicaRef.current.x += snx * sprintSpeed;
+                    chicaRef.current.y += sny * sprintSpeed;
+                    if (spawnDist <= 15) {
+                        bolting = false;
+                        clearInterval(chicaRoam);
+                        setTimeout(waitcheck, 13000);
+                    }
+                    return; // Skip everything else
+                }
 
                 // Back to wait but wait how the fuck do i loop this without hard coding
                 if (distance <= 15) {
@@ -359,17 +390,17 @@ export default function doorCheck() {
 
                 // Sprint State
 
-                        // Door 1 danger zone distance check
+                // Door 1 danger zone distance check
                 let doorx1 = DANGERZONES.DOOR1.x - chicaRef.current.x;
                 let doory1 = DANGERZONES.DOOR1.y - chicaRef.current.y;
                 const door1Dist = Math.sqrt(doorx1 ** 2 + doory1 ** 2);
 
-                        // Door 2 danger zone distance check
+                // Door 2 danger zone distance check
                 let doorx2 = DANGERZONES.DOOR2.x - chicaRef.current.x;
                 let doory2 = DANGERZONES.DOOR2.y - chicaRef.current.y;
                 const door2Dist = Math.sqrt(doorx2 ** 2 + doory2 ** 2);
 
-                        // Allowing speed to be aggressive
+                // Allowing speed to be aggressive
 
                 if (door1Dist < 500) {
 
@@ -378,35 +409,59 @@ export default function doorCheck() {
                     targetX = DANGERZONES.DOOR1.x;
                     targetY = DANGERZONES.DOOR1.y;
 
-                    const ndx1 = doorx1/door1Dist;
-                    const ndy1 = doory1/door1Dist;
+                    const ndx1 = doorx1 / door1Dist;
+                    const ndy1 = doory1 / door1Dist;
 
 
                     chicaRef.current.x += ndx1 * speed;
                     chicaRef.current.y += ndy1 * speed;
 
                     // Checking if youre in the danger zone TODO: FINISH DANGERZONE CHECK
-                    if (door1Dist <= 15 ) {}
+                    if (door1Dist <= 50) {
+                        if (door1Ref.current === "OPEN") {
+                            setgameOver(true);
+                            clearInterval(chicaRoam);
+                                setTimeout(() => {
+                            window.location.reload();
+                        },5500);
+                        } else {
+                            // Bolt straight to the kitchen
+                                bolting = true;
+                        }
+                    }
 
                 } else if (door2Dist < 500) {
                     speed = sprintSpeed;
                     targetX = DANGERZONES.DOOR2.x;
                     targetY = DANGERZONES.DOOR2.y;
 
-                    const ndx2 = doorx2/door2Dist;
-                    const ndy2 = doory2/door2Dist;
+                    const ndx2 = doorx2 / door2Dist;
+                    const ndy2 = doory2 / door2Dist;
 
 
                     chicaRef.current.x += ndx2 * speed;
-                    chicaRef.current.y += ndy2 * speed; 
-                    
-                    
+                    chicaRef.current.y += ndy2 * speed;
+
+                    if (door2Dist <= 50) {
+                        if (door2Ref.current === "OPEN") {
+                            setgameOver(true);
+                            clearInterval(chicaRoam);
+                                setTimeout(() => {
+                            window.location.reload();
+                        },5500);
+                        } else {
+                            // Bolt straight to the kitchen
+                                bolting = true;
+                        }
+                    }
+
+
                 } else {
-                    const nx = dx/distance;
-                    const ny = dy/distance;
+                    const nx = dx / distance;
+                    const ny = dy / distance;
 
                     chicaRef.current.x += nx * roamSpeed;
-                    chicaRef.current.y += ny * roamSpeed; 
+                    chicaRef.current.y += ny * roamSpeed;
                     console.log(`${chicaRef.current.x} : ${chicaRef.current.y}`);
                 }
 
@@ -415,26 +470,26 @@ export default function doorCheck() {
 
 
 
-                
 
 
-                
-            },50)
 
-            
-        
-        
-        
+
+            }, 50)
+
+
+
+
+
         }
         currentState = setTimeout(waitcheck, 5000);
 
-        
-        
+
+
         return () => {
             clearTimeout(currentState)
         }
 
-        
+
 
     }, [])
 
@@ -444,6 +499,10 @@ export default function doorCheck() {
     return (
         <div className="page-container">
             <>
+                {gameOver === true && <div className="jumpscare" >
+                    {jumpScare()}
+                </div>}
+
                 <div className="game-world">
                     {/* MAP */}
 
@@ -501,7 +560,7 @@ export default function doorCheck() {
                         top: ROOMS.TOILET.y
                     }}>
                         <p>Toilet</p>
-                        
+
                     </div>)}
 
                     {/* Store Room Cam */}

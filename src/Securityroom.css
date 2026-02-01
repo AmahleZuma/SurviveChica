@@ -3,6 +3,21 @@
     min-height: 1000px;
 }
 
+.jumpscare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vid {
+    z-index: 13;
+}
+
 .game-world {
     position: relative;
     background: #1111;
