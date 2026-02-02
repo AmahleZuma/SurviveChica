@@ -3,7 +3,7 @@ import { useSound } from 'use-sound';
 import './Securityroom.css'
 import doorClose from './sfx/doorOpen.mp3';
 import ambience from './sfx/ambience.mp3';
-import video from './video/jumpscare.mp4'
+
 
 
 
@@ -292,7 +292,7 @@ export default function doorCheck() {
 
     function jumpScare() {
         return (
-            <video className="vid" src={video} autoPlay></video>
+            <video className="vid" src="/video/jumpscare.mp4" autoPlay></video>
 
         )
     }
